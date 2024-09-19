@@ -17,18 +17,18 @@ namespace API.Repository
         }
         public Product? GetById(int id)
         {
-           return _context.Products.FirstOrDefault(p => p.Id == id);
+            return _context.Products.FirstOrDefault(p => p.Id == id);
         }
 
-        
+
         public void Create(Product entity)
         {
             _context.Products.Add(entity);
             _context.SaveChanges();
         }
-        public void Update(int id,Product entity)
+        public void Update(int id, Product entity)
         {
-            Product? oldProduct= GetById(id);
+            Product? oldProduct = GetById(id);
             oldProduct.Name = entity.Name;
             oldProduct.Description = entity.Description;
             oldProduct.Price = entity.Price;
@@ -36,11 +36,11 @@ namespace API.Repository
         }
         public void Delete(int id)
         {
-            Product product=GetById(id);
-           
-                _context.Products.Remove(product);
-                _context.SaveChanges();
-           
+            Product product = GetById(id);
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
         }
     }
 }
