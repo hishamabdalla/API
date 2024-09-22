@@ -13,6 +13,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddCors(corsOptions =>
+{
+    corsOptions.AddPolicy("MyPolicy", builder =>
+        builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod());
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
+app.UseCors("MyPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
